@@ -63,16 +63,22 @@ class KDE(object):
             kernel = 'epa'
         else:
             kernel = 'biw'
-        plt.figure(figsize=(10, 6))
+        plt.figure(figsize=(9, 6))
+        plt.subplot(2,1,2)
         sns.kdeplot(data=self.data, bw=0.5, kernel = kernel)
-        plt.title(self.kernel.__name__)
-
+        plt.title(self.kernel.__name__ + ' sns func predict')
+        
+        plt.figure(figsize=(9, 6))
+        plt.subplot(2,1,1)
+        plt.title(self.kernel.__name__ + ' self_writter predict')
+        predict = np.array([self.predict(datum) for datum in self.data])
+        plt.scatter(self.data, predict, marker = '.')
 
 #define the  data and how it looks 
 x = datainator(200)
 hist = plt.hist(x, bins=30, normed=True)
 
-#testing 
+#tests on data
 model_box = KDE(box)
 model_box.fit(x)
 print(model_box.predict(0))
